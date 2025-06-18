@@ -5,6 +5,37 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Project X</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+
+      #welcome-message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        font-family: "Press Start 2P", sans-serif;
+        font-size: 1.2em;
+        text-align: center;
+        z-index: 1000;
+        display: none;
+      }
+
+      #welcome-message button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-family: "Press Start 2P", sans-serif;
+        font-size: 1em;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: white;
+        color: black;
+      }
+    </style>
   </head>
   <body>
     <canvas class="game"></canvas>
@@ -18,7 +49,7 @@
     </div>
     <div id="highest-score">Highest: 0</div>
     <div id="score">Score: 0</div>
-    <div id="close-call-message" style="display: none;">Close Call!</div> <!-- Added Close Call message -->
+    <div id="close-call-message" style="display: none;">Close Call!</div>
     <div id="coin-counter">Coins: 0</div>
     <div id="result-container">
       <div id="result">
@@ -29,6 +60,37 @@
         <button id="retry">Retry</button>
       </div>
     </div>
+    <div id="welcome-message">
+      Use the arrow keys to control the player!
+      <button id="close-welcome-message">OK</button>
+    </div>
     <script type="module" src="/src/main.js"></script>
+    <script>
+      // Show the welcome message only the first time the game is opened
+      window.onload = function () {
+        const welcomeMessage = document.getElementById("welcome-message");
+        const closeButton = document.getElementById("close-welcome-message");
+
+        // Check if the message has already been shown
+        const hasSeenWelcomeMessage = localStorage.getItem("hasSeenWelcomeMessage");
+
+        if (!hasSeenWelcomeMessage && welcomeMessage) {
+          welcomeMessage.style.display = "block";
+
+          // Allow the user to close the message manually
+          closeButton.addEventListener("click", () => {
+            welcomeMessage.style.display = "none";
+          });
+
+          // Automatically hide the message after 3 seconds
+          setTimeout(() => {
+            welcomeMessage.style.display = "none";
+          }, 3000);
+
+          // Set the flag in localStorage
+          localStorage.setItem("hasSeenWelcomeMessage", "true");
+        }
+      };
+    </script>
   </body>
 </html>

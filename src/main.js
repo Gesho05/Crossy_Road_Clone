@@ -45,6 +45,28 @@ function initializeGame() {
   if (scoreDOM) scoreDOM.innerText = "Score: 0";
   if (highestScoreDOM) highestScoreDOM.innerText = `Highest: ${highestScore}`;
   if (resultDOM) resultDOM.style.visibility = "hidden";
+
+  // Show welcome message
+  showWelcomeMessage();
+}
+
+function showWelcomeMessage() {
+  const welcomeMessage = document.getElementById("welcome-message");
+  const closeButton = document.getElementById("close-welcome-message");
+
+  if (welcomeMessage) {
+    welcomeMessage.style.display = "block";
+
+    // Allow the user to close the message manually
+    closeButton.addEventListener("click", () => {
+      welcomeMessage.style.display = "none";
+    });
+
+    // Automatically hide the message after 3 seconds
+    setTimeout(() => {
+      welcomeMessage.style.display = "none";
+    }, 3000);
+  }
 }
 
 const renderer = Renderer();
